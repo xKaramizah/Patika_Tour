@@ -30,8 +30,8 @@ public class OperatorGUI extends JFrame {
     private JTextField fld_phone;
     private JTextField fld_email;
     private JComboBox cmb_star;
-    private JButton btn_add;
-    private JButton btn_clear;
+    private JButton btn_hotel_add;
+    private JButton btn_hotel_clear;
     private JComboBox cmb_service_type;
     private JCheckBox check_carpark;
     private JCheckBox check_fitness;
@@ -45,6 +45,26 @@ public class OperatorGUI extends JFrame {
     private JPanel pnl_room_list;
     private JTable tbl_room_list;
     private JScrollPane scrl_room_list;
+    private JComboBox<String> cmb_room_hotels;
+    private JTextField fld_room_type;
+    private JTextField fld_room_beds;
+    private JCheckBox check_tv;
+    private JCheckBox check_vault;
+    private JCheckBox check_game;
+    private JCheckBox check_miniBar;
+    private JCheckBox check_projection;
+    private JTextField fld_room_square;
+    private JTextField fld_room_stock;
+    private JButton btn_room_add;
+    private JButton btn_room_clear;
+    private JFormattedTextField fld_room_adult_price;
+    private JFormattedTextField fld_room_adult_discounted;
+    private JFormattedTextField fld_room_child_price;
+    private JFormattedTextField fld_room_child_discounted;
+    private JComboBox cmb_currency_1;
+    private JComboBox cmb_currency_2;
+    private JComboBox cmb_currency_3;
+    private JComboBox cmb_currency_4;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private JPopupMenu popupMenu;
@@ -54,29 +74,39 @@ public class OperatorGUI extends JFrame {
 
     public OperatorGUI(User user) {
         add(wrapper);
-        setSize(1100, 550);
+        setSize(1000, 500);
         setTitle(Config.PROJECT_TITLE);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        txt_welcome.setText("Yönetim Ekranı'na hoşgeldiniz Sn. " + user.getName());
+        txt_welcome.setText("Yönetim Arayüzüne hoşgeldiniz Sn. " + user.getName());
         setVisible(true);
 
         setupHotelTable();
         setupRoomTable();
+        setupRoomCmb();
         setupListeners(user);
+
+    }
+
+    private void setupRoomCmb() {
+        cmb_room_hotels.addItem("");
+        for (Hotel hotel : Hotel.getList()) {
+            cmb_room_hotels.addItem(hotel.getName());
+        }
     }
 
     private void setupListeners(User user) {
+
         btn_quit.addActionListener(e -> {
             if (Helper.showConfirmDialog("sure")) {
                 dispose();
                 SwingUtilities.invokeLater(() -> new SearchGUI(user));
             }
         });
+        // ---- HOTEL LISTENERS ---- //
 
-        btn_add.addActionListener(e -> {
-            if (Helper.isEmpty(fld_name) || Helper.isEmpty(fld_address) || Helper.isEmpty(fld_city) || Helper.isEmpty(fld_region) || Helper.isEmpty(fld_phone) ||
-                    Helper.isEmpty(fld_email) || Helper.isEmpty(cmb_star) || Helper.isEmpty(cmb_service_type) || Helper.isEmpty(fld_winter_start) || Helper.isEmpty(fld_winter_end)) {
+        btn_hotel_add.addActionListener(e -> {
+            if (Helper.isEmpty(fld_name) || Helper.isEmpty(fld_address) || Helper.isEmpty(fld_city) || Helper.isEmpty(fld_region) || Helper.isEmpty(fld_phone) || Helper.isEmpty(fld_email) || Helper.isEmpty(cmb_star) || Helper.isEmpty(cmb_service_type) || Helper.isEmpty(fld_winter_start) || Helper.isEmpty(fld_winter_end)) {
                 Helper.showMessageDialog("fill");
             } else {
                 String name = fld_name.getText().trim();
@@ -132,7 +162,7 @@ public class OperatorGUI extends JFrame {
                 }
             }
         });
-        btn_clear.addActionListener(e -> {
+        btn_hotel_clear.addActionListener(e -> {
             clearHotelAddFields();
         });
         deleteMenu.addActionListener(e -> {
@@ -169,6 +199,46 @@ public class OperatorGUI extends JFrame {
                 }
             }
         });
+        // END ---- HOTEL LISTENERS ---- //
+
+        // ---- ROOM LISTENERS ---- //
+        btn_room_clear.addActionListener(e -> {
+            clearRoomAddFields();
+        });
+        btn_room_add.addActionListener(e -> {
+            if (Helper.isEmpty(cmb_room_hotels) || Helper.isEmpty(fld_room_beds) || Helper.isEmpty(fld_room_stock) || Helper.isEmpty(fld_room_square) || Helper.isEmpty(fld_room_type)
+                    || Helper.isEmpty(fld_room_adult_price) || Helper.isEmpty(fld_room_adult_discounted) || Helper.isEmpty(fld_room_child_price) || Helper.isEmpty(fld_room_child_discounted)
+                    || Helper.isEmpty(cmb_currency_1) || Helper.isEmpty(cmb_currency_2) || Helper.isEmpty(cmb_currency_3) || Helper.isEmpty(cmb_currency_4)) {
+                Helper.showMessageDialog("fill");
+            } else {
+
+                Helper.showMessageDialog("done");
+            }
+        });
+
+        // END ---- ROOM LISTENERS ---- //
+
+    }
+
+    private void clearRoomAddFields() {
+        fld_room_beds.setText(null);
+        fld_room_stock.setText(null);
+        fld_room_square.setText(null);
+        fld_room_type.setText(null);
+        cmb_room_hotels.setSelectedItem(null);
+        check_game.setSelected(false);
+        check_miniBar.setSelected(false);
+        check_tv.setSelected(false);
+        check_vault.setSelected(false);
+        check_projection.setSelected(false);
+        fld_room_adult_price.setText(null);
+        fld_room_adult_discounted.setText(null);
+        fld_room_child_price.setText(null);
+        fld_room_child_discounted.setText(null);
+        cmb_currency_1.setSelectedItem(null);
+        cmb_currency_2.setSelectedItem(null);
+        cmb_currency_3.setSelectedItem(null);
+        cmb_currency_4.setSelectedItem(null);
     }
 
     private void clearHotelAddFields() {

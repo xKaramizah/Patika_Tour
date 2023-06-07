@@ -6,7 +6,7 @@ public class Config {
     public static String DB_PASS = "pass";
     public static String PROJECT_TITLE = "Patika Turizm Acentesi";
     public static String CALENDAR_TITLE = "Tarih seçiniz";
-    public static int SCREEN_WIDTH = 700;
+    public static int SCREEN_WIDTH = 850;
     public static String PROJECT_MAIL = "info@patika...";
     public static String PROJECT_PHONE = "+90-0212-000-000 ";
     public static String PROJECT_ADDRESS = "Caferağa mah. NO: 1 KAT: 1 \nKADIKÖY  / İSTANBUL";

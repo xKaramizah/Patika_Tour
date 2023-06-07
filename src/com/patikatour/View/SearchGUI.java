@@ -25,7 +25,7 @@ public class SearchGUI extends JFrame {
         add(wrapper);
         setTitle(Config.PROJECT_TITLE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(Config.SCREEN_WIDTH, 285);
+        setSize(Config.SCREEN_WIDTH, 325);
         setLocationRelativeTo(null);
         setResizable(false);
         fld_exit_date.setEnabled(false);
