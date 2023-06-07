@@ -17,11 +17,13 @@ public class Hotel {
     private int star;
     private String features;
     private String serviceType;
+    private Date winterStart;
+    private Date winterEnd;
 
     public Hotel() {
     }
 
-    public Hotel(int id, String name, String address, String city, String region, String phone, String email, int star, String features, String pensionType) {
+    public Hotel(int id, String name, String address, String city, String region, String phone, String email, int star, String features, String serviceType, Date winterStart, Date winterEnd) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -31,17 +33,18 @@ public class Hotel {
         this.email = email;
         this.star = star;
         this.features = features;
-        this.serviceType = pensionType;
+        this.serviceType = serviceType;
+        this.winterStart = winterStart;
+        this.winterEnd = winterEnd;
     }
 
-    public static boolean add(String name, String address, String city, String region, String phone, String email, int star, String features, String service_type) {
+    public static boolean add(String name, String address, String city, String region, String phone, String email, int star, String features, String service_type, Date winterStart, Date winterEnd) {
         String query = "INSERT INTO hotel (name, address, city, region, phone, email, star, features, service_type) VALUES (?,?,?,?,?,?,?,?,?)";
         boolean result;
         if (getFetch("SELECT * FROM hotel WHERE name = '" + name + "'") != null) {
             Helper.showMessageDialog("Bu otel daha önceden eklenmiş");
             result = false;
         } else {
-
             try {
                 PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
                 ps.setString(1, name);
@@ -54,9 +57,26 @@ public class Hotel {
                 ps.setString(8, features);
                 ps.setString(9, service_type);
                 result = ps.executeUpdate() != -1;
+                ps.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+        return result && addWinterDates(name, winterStart, winterEnd);
+    }
+
+    private static boolean addWinterDates(String hotelName, Date winterStart, Date winterEnd) {
+        String query = "INSERT INTO period (start_date, end_date, hotel_id) VALUES (?,?,?)";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setDate(1, winterStart);
+            ps.setDate(2, winterEnd);
+            ps.setInt(3, getFetch("SELECT * FROM hotel WHERE name = '" + hotelName + "'").getId());
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -102,8 +122,8 @@ public class Hotel {
     public static ArrayList<Hotel> getList() {
         ArrayList<Hotel> hotels = new ArrayList<>();
         Hotel obj;
+        Period periodObj;
         String query = "SELECT * FROM hotel";
-
         try {
             Connection conn = DBConnector.getConnect();
             Statement st = conn.createStatement();
@@ -120,6 +140,11 @@ public class Hotel {
                 obj.setStar(rs.getInt("star"));
                 obj.setFeatures(rs.getString("features"));
                 obj.setServiceType(rs.getString("service_type"));
+                periodObj = Period.getFetch("SELECT * FROM period WHERE hotel_id = " + rs.getInt("id"));
+                if (periodObj != null) {
+                    obj.setWinterStart((Date) periodObj.getStartDate());
+                    obj.setWinterEnd((Date) periodObj.getEndDate());
+                }
                 hotels.add(obj);
             }
             conn.close();
@@ -209,5 +234,21 @@ public class Hotel {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
+    }
+
+    public Date getWinterStart() {
+        return winterStart;
+    }
+
+    public void setWinterStart(Date winterStart) {
+        this.winterStart = winterStart;
+    }
+
+    public Date getWinterEnd() {
+        return winterEnd;
+    }
+
+    public void setWinterEnd(Date winterEnd) {
+        this.winterEnd = winterEnd;
     }
 }

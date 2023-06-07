@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="wrapper" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="818" height="604"/>
+      <xy x="20" y="20" width="1007" height="614"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -18,9 +18,12 @@
         <children>
           <component id="8a3d4" class="javax.swing.JButton" binding="btn_quit">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="120" height="-1"/>
+              </grid>
             </constraints>
             <properties>
+              <background color="-4521971"/>
               <text value="Kapat"/>
             </properties>
           </component>
@@ -79,8 +82,8 @@
                   </scrollpane>
                 </children>
               </grid>
-              <grid id="abcd9" binding="pnl_hotel_add" layout-manager="GridLayoutManager" row-count="14" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="10" left="30" bottom="10" right="60"/>
+              <grid id="abcd9" binding="pnl_hotel_add" layout-manager="GridLayoutManager" row-count="15" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="10" left="120" bottom="10" right="200"/>
                 <constraints>
                   <tabbedpane title="Otel Ekle"/>
                 </constraints>
@@ -89,7 +92,7 @@
                 <children>
                   <component id="e899f" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Otel Adı : "/>
@@ -97,26 +100,10 @@
                   </component>
                   <vspacer id="2dacb">
                     <constraints>
-                      <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                   <component id="40127" class="javax.swing.JTextField" binding="fld_name">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="7b726" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Adres : "/>
-                    </properties>
-                  </component>
-                  <component id="e1fe2" class="javax.swing.JTextField" binding="fld_address">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -124,15 +111,15 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="1d995" class="javax.swing.JLabel">
+                  <component id="7b726" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Şehir : "/>
+                      <text value="Adres : "/>
                     </properties>
                   </component>
-                  <component id="fed08" class="javax.swing.JTextField" binding="fld_city">
+                  <component id="e1fe2" class="javax.swing.JTextField" binding="fld_address">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -140,15 +127,15 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="cef1b" class="javax.swing.JLabel">
+                  <component id="1d995" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Bölge :"/>
+                      <text value="Şehir : "/>
                     </properties>
                   </component>
-                  <component id="b869a" class="javax.swing.JTextField" binding="fld_region">
+                  <component id="fed08" class="javax.swing.JTextField" binding="fld_city">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -156,15 +143,15 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="9cae0" class="javax.swing.JLabel">
+                  <component id="cef1b" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Telefon : "/>
+                      <text value="Bölge :"/>
                     </properties>
                   </component>
-                  <component id="29602" class="javax.swing.JTextField" binding="fld_phone">
+                  <component id="b869a" class="javax.swing.JTextField" binding="fld_region">
                     <constraints>
                       <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -172,39 +159,15 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="9a5f4" class="javax.swing.JLabel">
+                  <component id="9cae0" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="E-posta : "/>
+                      <text value="Telefon : "/>
                     </properties>
                   </component>
-                  <component id="37a69" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Yıldız Sayısı : "/>
-                    </properties>
-                  </component>
-                  <component id="e24d9" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Tesis Özellikleri : "/>
-                    </properties>
-                  </component>
-                  <component id="fbf8d" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Servis Tipi : "/>
-                    </properties>
-                  </component>
-                  <component id="8d321" class="javax.swing.JTextField" binding="fld_email">
+                  <component id="29602" class="javax.swing.JTextField" binding="fld_phone">
                     <constraints>
                       <grid row="5" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -212,9 +175,49 @@
                     </constraints>
                     <properties/>
                   </component>
+                  <component id="9a5f4" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="E-posta : "/>
+                    </properties>
+                  </component>
+                  <component id="37a69" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Yıldız Sayısı : "/>
+                    </properties>
+                  </component>
+                  <component id="e24d9" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Tesis Özellikleri : "/>
+                    </properties>
+                  </component>
+                  <component id="fbf8d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Servis Tipi : "/>
+                    </properties>
+                  </component>
+                  <component id="8d321" class="javax.swing.JTextField" binding="fld_email">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
                   <component id="afc68" class="javax.swing.JComboBox" binding="cmb_star">
                     <constraints>
-                      <grid row="6" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="7" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <model>
@@ -229,7 +232,7 @@
                   </component>
                   <component id="61a96" class="javax.swing.JComboBox" binding="cmb_service_type">
                     <constraints>
-                      <grid row="9" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="10" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <model>
@@ -244,7 +247,7 @@
                   </component>
                   <component id="d5e00" class="javax.swing.JCheckBox" binding="check_carpark">
                     <constraints>
-                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Ücretsiz Otopark"/>
@@ -252,7 +255,7 @@
                   </component>
                   <component id="799bd" class="javax.swing.JCheckBox" binding="check_fitness">
                     <constraints>
-                      <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Fitness Center"/>
@@ -260,7 +263,7 @@
                   </component>
                   <component id="c1ebf" class="javax.swing.JCheckBox" binding="check_wifi">
                     <constraints>
-                      <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Ücretsiz WiFi"/>
@@ -268,7 +271,7 @@
                   </component>
                   <component id="ec5e7" class="javax.swing.JCheckBox" binding="check_janitor">
                     <constraints>
-                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Temizlik Hizmeti"/>
@@ -276,7 +279,7 @@
                   </component>
                   <component id="6fa12" class="javax.swing.JCheckBox" binding="check_spa">
                     <constraints>
-                      <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="SPA"/>
@@ -284,7 +287,7 @@
                   </component>
                   <component id="cbfca" class="javax.swing.JCheckBox" binding="check_pool">
                     <constraints>
-                      <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Yüzme Havuzu"/>
@@ -292,7 +295,7 @@
                   </component>
                   <component id="80b3a" class="javax.swing.JCheckBox" binding="check_room_service">
                     <constraints>
-                      <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="7/24 Oda Servisi"/>
@@ -300,70 +303,50 @@
                   </component>
                   <component id="e2f0" class="javax.swing.JButton" binding="btn_add">
                     <constraints>
-                      <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="13" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="120" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
+                      <background color="-13141761"/>
                       <text value="Ekle"/>
                     </properties>
                   </component>
                   <component id="e97aa" class="javax.swing.JButton" binding="btn_clear">
                     <constraints>
-                      <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="13" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="120" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
+                      <background color="-13141761"/>
                       <text value="Temizle"/>
                     </properties>
                   </component>
                   <vspacer id="fa4e9">
                     <constraints>
-                      <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                   <component id="1784f" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Dönemler : "/>
+                      <text value="İndirim Sezonu : "/>
                     </properties>
                   </component>
-                  <component id="73d1d" class="javax.swing.JFormattedTextField" binding="fld_period_1">
-                    <constraints>
-                      <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <text value="1. dönem başl."/>
-                    </properties>
-                  </component>
-                  <component id="f413e" class="javax.swing.JFormattedTextField" binding="fld_period_2">
-                    <constraints>
-                      <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <editable value="true"/>
-                      <enabled value="false"/>
-                      <text value="1. dönem bitiş"/>
-                    </properties>
-                  </component>
-                  <component id="55760" class="javax.swing.JFormattedTextField" binding="fld_period_3">
+                  <component id="73d1d" class="javax.swing.JFormattedTextField" binding="fld_winter_start">
                     <constraints>
                       <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="2. dönem başl."/>
+                      <text value="başlangıç"/>
                     </properties>
                   </component>
-                  <component id="4c5e6" class="javax.swing.JFormattedTextField" binding="fld_period_4">
+                  <component id="f413e" class="javax.swing.JFormattedTextField" binding="fld_winter_end">
                     <constraints>
                       <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -372,7 +355,16 @@
                     <properties>
                       <editable value="true"/>
                       <enabled value="false"/>
-                      <text value="2. dönem bitiş"/>
+                      <text value="bitiş"/>
+                    </properties>
+                  </component>
+                  <component id="ee502" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font name="Arial" size="16" style="1"/>
+                      <text value="EKLENECEK OTEL DETAYLARINI GİRİNİZ"/>
                     </properties>
                   </component>
                 </children>
