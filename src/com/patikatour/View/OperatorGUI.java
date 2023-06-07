@@ -3,6 +3,7 @@ package com.patikatour.View;
 import com.patikatour.Helper.Config;
 import com.patikatour.Helper.Helper;
 import com.patikatour.Model.Hotel;
+import com.patikatour.Model.Room;
 import com.patikatour.Model.User;
 
 import javax.swing.*;
@@ -41,10 +42,15 @@ public class OperatorGUI extends JFrame {
     private JCheckBox check_pool;
     private JFormattedTextField fld_winter_start;
     private JFormattedTextField fld_winter_end;
+    private JPanel pnl_room_list;
+    private JTable tbl_room_list;
+    private JScrollPane scrl_room_list;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private JPopupMenu popupMenu;
     private JMenuItem deleteMenu;
+    private DefaultTableModel mdl_room_list;
+    private Object[] row_room_list;
 
     public OperatorGUI(User user) {
         add(wrapper);
@@ -56,6 +62,7 @@ public class OperatorGUI extends JFrame {
         setVisible(true);
 
         setupHotelTable();
+        setupRoomTable();
         setupListeners(user);
     }
 
@@ -199,6 +206,44 @@ public class OperatorGUI extends JFrame {
         tbl_hotel_list.getColumnModel().getColumn(0).setMaxWidth(40);
         tbl_hotel_list.getColumnModel().getColumn(7).setMaxWidth(40);
         tbl_hotel_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void setupRoomTable() {
+        String[] roomColumns = {"ID", "Otel Adı", "Oda Tipi", "Yatak Sayısı", "TV", "Mini Bar", "Oyun Konsolu", "Kasa", "Projeksiyon", "m2", "Toplam Adet"};
+        mdl_room_list = new DefaultTableModel(null, roomColumns);
+        row_room_list = new Object[mdl_room_list.getColumnCount()];
+        tbl_room_list.setModel(mdl_room_list);
+        loadRoomTable();
+        tbl_room_list.getTableHeader().setReorderingAllowed(false);
+        tbl_room_list.getColumnModel().getColumn(0).setMaxWidth(40);
+        tbl_room_list.getColumnModel().getColumn(3).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(4).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(5).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(6).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(7).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(8).setMaxWidth(75);
+        tbl_room_list.getColumnModel().getColumn(9).setMaxWidth(100);
+        tbl_room_list.getColumnModel().getColumn(10).setMaxWidth(100);
+    }
+
+    private void loadRoomTable() {
+        mdl_room_list.setRowCount(0);
+        int i;
+        for (Room room : Room.getList()) {
+            i = 0;
+            row_room_list[i++] = room.getId();
+            row_room_list[i++] = Hotel.getFetch("SELECT * FROM hotel WHERE id = " + room.getHotelID()).getName();
+            row_room_list[i++] = room.getType();
+            row_room_list[i++] = room.getBedNumber();
+            row_room_list[i++] = room.isTv();
+            row_room_list[i++] = room.isMinibar();
+            row_room_list[i++] = room.isGameConsole();
+            row_room_list[i++] = room.isVault();
+            row_room_list[i++] = room.isProjection();
+            row_room_list[i++] = room.getSquareMeter();
+            row_room_list[i++] = room.getStock();
+            mdl_room_list.addRow(row_room_list);
+        }
     }
 
     private void loadHotelTable() {

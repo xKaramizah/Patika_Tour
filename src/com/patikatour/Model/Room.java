@@ -1,5 +1,13 @@
 package com.patikatour.Model;
 
+import com.patikatour.Helper.DBConnector;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class Room {
     private int id;
     private String type;
@@ -11,8 +19,12 @@ public class Room {
     private boolean projection;
     private double squareMeter;
     private int hotelID;
+    private byte stock;
 
-    public Room(int id, String type, byte bedNumber, boolean tv, boolean minibar, boolean gameConsole, boolean vault, boolean projection, double squareMeter, int hotelID) {
+    public Room() {
+    }
+
+    public Room(int id, String type, byte bedNumber, boolean tv, boolean minibar, boolean gameConsole, boolean vault, boolean projection, double squareMeter, int hotelID, byte stock) {
         this.id = id;
         this.type = type;
         this.bedNumber = bedNumber;
@@ -23,6 +35,36 @@ public class Room {
         this.projection = projection;
         this.squareMeter = squareMeter;
         this.hotelID = hotelID;
+        this.stock = stock;
+    }
+
+    public static ArrayList<Room> getList() {
+        ArrayList<Room> rooms = new ArrayList<>();
+        Room obj;
+        String query = "SELECT * FROM room";
+        try {
+            Connection conn = DBConnector.getConnect();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new Room();
+                obj.setId(rs.getInt("id"));
+                obj.setType(rs.getString("type"));
+                obj.setBedNumber(rs.getByte("bed_number"));
+                obj.setTv(rs.getBoolean("tv"));
+                obj.setMinibar(rs.getBoolean("minibar"));
+                obj.setGameConsole(rs.getBoolean("game_console"));
+                obj.setVault(rs.getBoolean("vault"));
+                obj.setProjection(rs.getBoolean("projection"));
+                obj.setSquareMeter(rs.getDouble("square_meter"));
+                obj.setHotelID(rs.getInt("hotel_id"));
+                obj.setStock(rs.getByte("stock"));
+                rooms.add(obj);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rooms;
     }
 
     public int getId() {
@@ -103,5 +145,13 @@ public class Room {
 
     public void setHotelID(int hotelID) {
         this.hotelID = hotelID;
+    }
+
+    public byte getStock() {
+        return stock;
+    }
+
+    public void setStock(byte stock) {
+        this.stock = stock;
     }
 }
