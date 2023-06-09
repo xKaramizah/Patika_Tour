@@ -88,10 +88,119 @@ public class Room {
             ps.setInt(9, hotelID);
             ps.setByte(10, stock);
             result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result && addPrices(hotelID, type, adultDiscountedPrice, adultPrice, childDiscountedPrice, childPrice);
+    }
+
+    private static boolean addPrices(int hotelID, String type, double adultDiscountedPrice, double adultPrice, double childDiscountedPrice, double childPrice) {
+        String query = "INSERT INTO price (adult_price, adult_price_dis, child_price, child_price_dis, room_id) VALUES (?,?,?,?,?)";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setDouble(1, adultPrice);
+            ps.setDouble(2, adultDiscountedPrice);
+            ps.setDouble(3, childPrice);
+            ps.setDouble(4, childDiscountedPrice);
+            ps.setDouble(5, getFetch(hotelID, type).getId());
+            result = ps.executeUpdate() != -1;
+            ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    public static boolean delete(int id) {
+        String query = "DELETE FROM room, price " +
+                "USING room " +
+                "JOIN price ON room.id = price.room_id " +
+                "WHERE room.id = ?";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setInt(1, id);
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static boolean update(int id, String type, byte bedNumber, boolean tv, boolean minibar, boolean gameConsole, boolean vault, boolean projection, double squareMeter,
+                                 int hotelID, byte stock, double adultDiscountedPrice, double adultPrice, double childDiscountedPrice, double childPrice) {
+        String query = "UPDATE room SET type = ?, bed_number = ?, tv = ?, minibar = ?, game_console= ?, vault = ?, projection = ?,square_meter = ?, hotel_id =?, stock =? WHERE id = ?";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setString(1, type);
+            ps.setByte(2, bedNumber);
+            ps.setBoolean(3, tv);
+            ps.setBoolean(4, minibar);
+            ps.setBoolean(5, gameConsole);
+            ps.setBoolean(6, vault);
+            ps.setBoolean(7, projection);
+            ps.setDouble(8, squareMeter);
+            ps.setInt(9, hotelID);
+            ps.setByte(10, stock);
+            ps.setInt(11, id);
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result && updatePrices(hotelID, type, adultPrice, adultDiscountedPrice, childPrice, childDiscountedPrice);
+    }
+
+    private static boolean updatePrices(int hotelID, String type, double adultPrice, double adultDiscountedPrice, double childPrice, double childDiscountedPrice) {
+        String query = "UPDATE price SET adult_price = ?, adult_price_dis = ?, child_price =?, child_price_dis = ? WHERE room_id = ?";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setDouble(1, adultPrice);
+            ps.setDouble(2, adultDiscountedPrice);
+            ps.setDouble(3, childPrice);
+            ps.setDouble(4, childDiscountedPrice);
+            ps.setInt(5, Room.getFetch(hotelID, type).getId());
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static Room getFetch(int hotelID, String type) {
+        Room obj = null;
+        String query = "SELECT * FROM room WHERE hotel_id = ? AND type = ?";
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setInt(1, hotelID);
+            ps.setString(2, type);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                obj = new Room();
+                obj.setId(rs.getInt("id"));
+                obj.setType(rs.getString("type"));
+                obj.setBedNumber(rs.getByte("bed_number"));
+                obj.setTv(rs.getBoolean("tv"));
+                obj.setMinibar(rs.getBoolean("minibar"));
+                obj.setGameConsole(rs.getBoolean("game_console"));
+                obj.setVault(rs.getBoolean("vault"));
+                obj.setProjection(rs.getBoolean("projection"));
+                obj.setSquareMeter(rs.getDouble("square_meter"));
+                obj.setHotelID(rs.getInt("hotel_id"));
+                obj.setStock(rs.getByte("stock"));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
     }
 
     public int getId() {

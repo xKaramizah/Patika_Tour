@@ -83,11 +83,16 @@ public class Hotel {
 
     public static boolean delete(int id) {
         boolean result;
-        String query = "DELETE FROM hotel WHERE id = ?";
+        String query = "DELETE FROM hotel, room, price " +
+                "USING hotel " +
+                "JOIN room ON hotel.id = room.hotel_id " +
+                "JOIN price ON room.id = price.room_id " +
+                " WHERE hotel.id = ?";
         try {
             PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
             ps.setInt(1, id);
             result = ps.executeUpdate() != -1;
+            ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
