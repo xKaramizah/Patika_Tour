@@ -203,6 +203,46 @@ public class Room {
         return obj;
     }
 
+    public static ArrayList<Room> searchList(String data, int personCount, java.sql.Date enter, java.sql.Date exit) {
+        ArrayList<Room> roomList = new ArrayList<>();
+        Room obj;
+        String query = "SELECT * FROM room " +
+                "INNER JOIN hotel ON room.hotel_id = hotel.id " +
+                "WHERE (hotel.address LIKE '%{{address}}%' OR hotel.region LIKE '%{{region}}%' OR hotel.city LIKE '%{{city}}%') " +
+                "AND bed_number >= {{personCount}} " +
+                "AND stock > 0 ";
+
+        query = query.replace("{{address}}", data);
+        query = query.replace("{{region}}", data);
+        query = query.replace("{{city}}", data);
+        query = query.replace("{{personCount}}", String.valueOf(personCount));
+
+        try {
+            Statement st = DBConnector.getConnect().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new Room();
+                obj.setId(rs.getInt("id"));
+                obj.setType(rs.getString("type"));
+                obj.setBedNumber(rs.getByte("bed_number"));
+                obj.setTv(rs.getBoolean("tv"));
+                obj.setMinibar(rs.getBoolean("minibar"));
+                obj.setGameConsole(rs.getBoolean("game_console"));
+                obj.setVault(rs.getBoolean("vault"));
+                obj.setProjection(rs.getBoolean("projection"));
+                obj.setSquareMeter(rs.getDouble("square_meter"));
+                obj.setHotelID(rs.getInt("hotel_id"));
+                obj.setStock(rs.getByte("stock"));
+                roomList.add(obj);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return roomList;
+    }
+
     public int getId() {
         return id;
     }

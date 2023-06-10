@@ -81,6 +81,47 @@ public class Hotel {
         return result;
     }
 
+    public static boolean update(int id, String name, String address, String city, String region, String phone, String email, int star, String features, String serviceType, Date winterStart, Date winterEnd) {
+        String query = "UPDATE hotel " +
+                "SET name=?, address=?, city=?, region=?, phone=?, email=?, star=?, features=?, service_type=? " +
+                "WHERE id = ?";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, city);
+            ps.setString(4, region);
+            ps.setString(5, phone);
+            ps.setString(6, email);
+            ps.setInt(7, star);
+            ps.setString(8, features);
+            ps.setString(9, serviceType);
+            ps.setInt(10, id);
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result && updateDates(id, winterStart, winterEnd);
+    }
+
+    private static boolean updateDates(int id, Date winterStart, Date winterEnd) {
+        String query = "UPDATE period SET start_date =?, end_date=? WHERE hotel_id =?";
+        boolean result;
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setDate(1,winterStart);
+            ps.setDate(2,winterEnd);
+            ps.setInt(3,id);
+            result = ps.executeUpdate() != -1;
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
     public static boolean delete(int id) {
         boolean result;
         String query = "DELETE FROM hotel, room, price " +

@@ -9,6 +9,7 @@ import com.patikatour.Model.User;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -110,6 +111,33 @@ public class OperatorGUI extends JFrame {
                 SwingUtilities.invokeLater(() -> new SearchGUI(user));
             }
         });
+
+        // ---- SEARCH LISTENERS ---- //
+
+        fld_winter_start.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fld_winter_start.setText(null);
+                CalendarGUI calendar = new CalendarGUI(OperatorGUI.this, fld_winter_start);
+                calendar.setVisible(true);
+                fld_winter_end.setEnabled(true);
+            }
+        });
+        fld_winter_end.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Helper.isEmpty(fld_winter_start)) {
+                    Helper.showMessageDialog("Başlangıç dönemini seçiniz!");
+                } else {
+                    fld_winter_end.setText(null);
+                    CalendarGUI calendar = new CalendarGUI(OperatorGUI.this, fld_winter_end);
+                    calendar.setVisible(true);
+                }
+            }
+        });
+
+        // END ---- SEARCH LISTENERS ---- //
+
         // ---- HOTEL LISTENERS ---- //
 
         btn_hotel_add.addActionListener(e -> {
@@ -186,27 +214,33 @@ public class OperatorGUI extends JFrame {
             }
         });
 
-        fld_winter_start.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                fld_winter_start.setText(null);
-                CalendarGUI calendar = new CalendarGUI(OperatorGUI.this, fld_winter_start);
-                calendar.setVisible(true);
-                fld_winter_end.setEnabled(true);
-            }
-        });
-        fld_winter_end.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (Helper.isEmpty(fld_winter_start)) {
-                    Helper.showMessageDialog("Başlangıç dönemini seçiniz!");
+        tbl_hotel_list.getModel().addTableModelListener(e -> {
+            if (e.getType() == TableModelEvent.UPDATE) {
+                if (Helper.showConfirmDialog("Otel'in bir özelliğiniz değiştiriyorsunuz. Emin misiniz?")) {
+                    int selectedID = Integer.parseInt(tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 0).toString());
+                    String name = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 1).toString();
+                    String address = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 2).toString();
+                    String city = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 3).toString();
+                    String region = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 4).toString();
+                    String phone = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 5).toString();
+                    String email = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 6).toString();
+                    int star = Integer.parseInt(tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 7).toString());
+                    String features = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 8).toString();
+                    String serviceType = tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 9).toString();
+                    java.sql.Date winterStart = java.sql.Date.valueOf(tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 10).toString());
+                    java.sql.Date winterEnd = java.sql.Date.valueOf(tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 11).toString());
+                    if (Hotel.update(selectedID, name, address, city, region, phone, email, star, features, serviceType, winterStart, winterEnd)) {
+                        Helper.showMessageDialog("done");
+                    } else {
+                        Helper.showMessageDialog("error");
+                    }
+
                 } else {
-                    fld_winter_end.setText(null);
-                    CalendarGUI calendar = new CalendarGUI(OperatorGUI.this, fld_winter_end);
-                    calendar.setVisible(true);
+                    loadHotelTable();
                 }
             }
         });
+
         // END ---- HOTEL LISTENERS ---- //
 
         // ---- ROOM LISTENERS ---- //

@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="wrapper" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="836" height="400"/>
+      <xy x="20" y="20" width="890" height="400"/>
     </constraints>
     <properties>
       <foreground color="-460552"/>
@@ -160,7 +160,6 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value=""/>
                     <item value="1"/>
                     <item value="2"/>
                     <item value="3"/>
@@ -181,7 +180,7 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value=""/>
+                    <item value="0"/>
                     <item value="1"/>
                     <item value="2"/>
                     <item value="3"/>
