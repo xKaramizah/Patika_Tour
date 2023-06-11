@@ -100,11 +100,10 @@ public class SearchGUI extends JFrame {
                 java.sql.Date enterDateSql = new java.sql.Date(enterDate.getTime());
                 java.sql.Date exitDateSql = new java.sql.Date(exitDate.getTime());
 
-                ArrayList<Room> searchList = Room.searchList(area, (adult + child), enterDateSql, exitDateSql);
+                ArrayList<Room> searchRooms = Room.searchList(area, (adult + child), enterDateSql, exitDateSql);
 
                 dispose();
-                new ResultGUI(user, searchList);
-
+                SwingUtilities.invokeLater(() -> new ResultGUI(user, searchRooms, adult, child, enterDateSql, exitDateSql));
             }
         });
     }

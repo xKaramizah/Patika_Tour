@@ -2,10 +2,7 @@ package com.patikatour.Model;
 
 import com.patikatour.Helper.DBConnector;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 
 public class Period {
@@ -21,15 +18,18 @@ public class Period {
         this.hotelID = hotelID;
     }
 
-    public static Period getFetch(String query) {
+    public static Period getFetch(int hotelID) {
+        String query = "SELECT * FROM period WHERE hotel_id = ?";
         Period obj = null;
         try {
-            Connection conn = DBConnector.getConnect();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setInt(1, hotelID);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 obj = new Period(rs.getInt("id"), rs.getDate("start_date"), rs.getDate("end_date"), rs.getInt("hotel_id"));
             }
+            ps.close();
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -111,9 +111,9 @@ public class Hotel {
         boolean result;
         try {
             PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
-            ps.setDate(1,winterStart);
-            ps.setDate(2,winterEnd);
-            ps.setInt(3,id);
+            ps.setDate(1, winterStart);
+            ps.setDate(2, winterEnd);
+            ps.setInt(3, id);
             result = ps.executeUpdate() != -1;
             ps.close();
         } catch (SQLException e) {
@@ -186,7 +186,7 @@ public class Hotel {
                 obj.setStar(rs.getInt("star"));
                 obj.setFeatures(rs.getString("features"));
                 obj.setServiceType(rs.getString("service_type"));
-                periodObj = Period.getFetch("SELECT * FROM period WHERE hotel_id = " + rs.getInt("id"));
+                periodObj = Period.getFetch(rs.getInt("id"));
                 if (periodObj != null) {
                     obj.setWinterStart((Date) periodObj.getStartDate());
                     obj.setWinterEnd((Date) periodObj.getEndDate());

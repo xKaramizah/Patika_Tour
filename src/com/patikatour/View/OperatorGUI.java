@@ -9,10 +9,7 @@ import com.patikatour.Model.User;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -192,6 +189,7 @@ public class OperatorGUI extends JFrame {
                     Helper.showMessageDialog("done");
                     loadHotelTable();
                     clearHotelAddFields();
+                    setupRoomCmb();
                 } else {
                     Helper.showMessageDialog("error");
                 }
