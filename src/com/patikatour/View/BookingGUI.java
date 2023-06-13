@@ -188,7 +188,7 @@ public class BookingGUI extends JFrame {
                 if (Booking.add(enterDateSql,exitDateSql,name,phone,email,note,room)){
                     Helper.showMessageDialog("Rezervasyonunuz oluşturuldu.");
                 } else {
-                    Helper.showMessageDialog("error");
+                    Helper.showMessageDialog("Seçtiğiniz tarihlerde bu oda tipi müsait değil");
                 }
             }
         });

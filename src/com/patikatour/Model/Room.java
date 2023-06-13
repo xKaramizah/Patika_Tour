@@ -202,8 +202,36 @@ public class Room {
         }
         return obj;
     }
+    public static Room getFetch(int id) {
+        Room obj = null;
+        String query = "SELECT * FROM room WHERE id = ?";
+        try {
+            PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                obj = new Room();
+                obj.setId(rs.getInt("id"));
+                obj.setType(rs.getString("type"));
+                obj.setBedNumber(rs.getByte("bed_number"));
+                obj.setTv(rs.getBoolean("tv"));
+                obj.setMinibar(rs.getBoolean("minibar"));
+                obj.setGameConsole(rs.getBoolean("game_console"));
+                obj.setVault(rs.getBoolean("vault"));
+                obj.setProjection(rs.getBoolean("projection"));
+                obj.setSquareMeter(rs.getDouble("square_meter"));
+                obj.setHotelID(rs.getInt("hotel_id"));
+                obj.setStock(rs.getByte("stock"));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+    }
 
-    public static ArrayList<Room> searchList(String data, int personCount, java.sql.Date enter, java.sql.Date exit) {
+    public static ArrayList<Room> searchList(String data, int personCount) {
         ArrayList<Room> roomList = new ArrayList<>();
         Room obj;
         String query = "SELECT * FROM room " +
@@ -331,36 +359,5 @@ public class Room {
         this.stock = stock;
     }
 
-    public double getAdultDiscountedPrice() {
-        return adultDiscountedPrice;
-    }
-
-    public void setAdultDiscountedPrice(double adultDiscountedPrice) {
-        this.adultDiscountedPrice = adultDiscountedPrice;
-    }
-
-    public double getAdultPrice() {
-        return adultPrice;
-    }
-
-    public void setAdultPrice(double adultPrice) {
-        this.adultPrice = adultPrice;
-    }
-
-    public double getChildDiscountedPrice() {
-        return childDiscountedPrice;
-    }
-
-    public void setChildDiscountedPrice(double childDiscountedPrice) {
-        this.childDiscountedPrice = childDiscountedPrice;
-    }
-
-    public double getChildPrice() {
-        return childPrice;
-    }
-
-    public void setChildPrice(double childPrice) {
-        this.childPrice = childPrice;
-    }
 }
 

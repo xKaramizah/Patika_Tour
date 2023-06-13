@@ -2,10 +2,7 @@ package com.patikatour.View;
 
 import com.patikatour.Helper.Config;
 import com.patikatour.Helper.Helper;
-import com.patikatour.Model.Hotel;
-import com.patikatour.Model.Price;
-import com.patikatour.Model.Room;
-import com.patikatour.Model.User;
+import com.patikatour.Model.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -31,10 +28,10 @@ public class OperatorGUI extends JFrame {
     private JTextField fld_region;
     private JTextField fld_phone;
     private JTextField fld_email;
-    private JComboBox cmb_star;
+    private JComboBox<Integer> cmb_star;
     private JButton btn_hotel_add;
     private JButton btn_hotel_clear;
-    private JComboBox cmb_service_type;
+    private JComboBox<String> cmb_service_type;
     private JCheckBox check_carpark;
     private JCheckBox check_fitness;
     private JCheckBox check_wifi;
@@ -68,14 +65,16 @@ public class OperatorGUI extends JFrame {
     private JComboBox<String> cmb_currency_3;
     private JComboBox<String> cmb_currency_4;
     private JPanel pnl_room_add;
+    private JTable tbl_booking_list;
+    private JPanel pnl_booking_list;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
-    private JPopupMenu hotelPopupMenu;
     private JMenuItem hotelDeleteMenuItem;
-    private JPopupMenu roomPopupMenu;
     private JMenuItem roomDeleteMenuItem;
     private DefaultTableModel mdl_room_list;
     private Object[] row_room_list;
+    private DefaultTableModel mdl_booking_list;
+    private Object[] row_booking_list;
 
     public OperatorGUI(User user) {
         add(wrapper);
@@ -88,9 +87,40 @@ public class OperatorGUI extends JFrame {
 
         setupHotelTable();
         setupRoomTable();
+        setupBookingTable();
         setupRoomCmb();
         setupListeners(user);
 
+    }
+
+    private void setupBookingTable() {
+        String[] colNames = {"id", "Otel Adı", "Oda Tipi", "Misafir Adı", "Telefon", "Eposta", "Not", "Giriş Tarihi", "Çıkış Tarihi"};
+        mdl_booking_list = new DefaultTableModel(null, colNames);
+        row_booking_list = new Object[mdl_booking_list.getColumnCount()];
+        loadBookingTable();
+        tbl_booking_list.setModel(mdl_booking_list);
+    }
+
+    private void loadBookingTable() {
+        mdl_booking_list.setRowCount(0);
+        int i;
+        Room room;
+        Hotel hotel;
+        for (Booking book : Booking.getList()) {
+            i = 0;
+            row_booking_list[i++] = book.getId();
+            room = Room.getFetch(book.getRoom_id());
+            hotel = Hotel.getFetch("SELECT * FROM hotel WHERE id = " + room.getHotelID());
+            row_booking_list[i++] = hotel.getName();
+            row_booking_list[i++] = room.getType();
+            row_booking_list[i++] = book.getName();
+            row_booking_list[i++] = book.getPhone();
+            row_booking_list[i++] = book.getEmail();
+            row_booking_list[i++] = book.getNote();
+            row_booking_list[i++] = book.getStart_date();
+            row_booking_list[i++] = book.getEnd_date();
+            mdl_booking_list.addRow(row_booking_list);
+        }
     }
 
     private void setupRoomCmb() {
@@ -335,7 +365,7 @@ public class OperatorGUI extends JFrame {
             }
         };
         row_hotel_list = new Object[mdl_hotel_list.getColumnCount()];
-        hotelPopupMenu = new JPopupMenu();
+        JPopupMenu hotelPopupMenu = new JPopupMenu();
         hotelDeleteMenuItem = new JMenuItem("Sil");
         hotelPopupMenu.add(hotelDeleteMenuItem);
 
@@ -361,7 +391,7 @@ public class OperatorGUI extends JFrame {
         };
         row_room_list = new Object[mdl_room_list.getColumnCount()];
 
-        roomPopupMenu = new JPopupMenu();
+        JPopupMenu roomPopupMenu = new JPopupMenu();
         roomDeleteMenuItem = new JMenuItem("Sil");
         roomPopupMenu.add(roomDeleteMenuItem);
 

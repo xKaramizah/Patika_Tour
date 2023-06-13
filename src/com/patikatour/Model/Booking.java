@@ -2,8 +2,8 @@ package com.patikatour.Model;
 
 import com.patikatour.Helper.DBConnector;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Booking {
@@ -16,7 +16,7 @@ public class Booking {
     private String note;
     private int room_id;
 
-    public Booking(int id, java.sql.Date start_date, java.sql.Date end_date, String name, String phone, String email, String note, Room room) {
+    public Booking(int id, java.sql.Date start_date, java.sql.Date end_date, String name, String phone, String email, String note, int room_id) {
         this.id = id;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -24,27 +24,75 @@ public class Booking {
         this.phone = phone;
         this.email = email;
         this.note = note;
-        this.room_id = room.getId();
+        this.room_id = room_id;
     }
 
     public static boolean add(java.sql.Date start_date, java.sql.Date end_date, String name, String phone, String email, String note, Room room) {
-        String query = "INSERT INTO booking (start_date, end_date, name, phone, email, note, room_id) VALUES (?,?,?,?,?,?,?)";
-        boolean result;
+        if (!isBookable(room, start_date)) {
+            return false;
+        } else {
+            String query = "INSERT INTO booking (start_date, end_date, name, phone, email, note, room_id) VALUES (?,?,?,?,?,?,?)";
+            boolean result;
+            try {
+                PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
+                ps.setDate(1, start_date);
+                ps.setDate(2, end_date);
+                ps.setString(3, name);
+                ps.setString(4, phone);
+                ps.setString(5, email);
+                ps.setString(6, note);
+                ps.setInt(7, room.getId());
+                result = ps.executeUpdate() != -1;
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return result;
+        }
+    }
+
+    private static boolean isBookable(Room room, java.sql.Date enterDate) {
+        String query = "SELECT COUNT(*) FROM booking " +
+                "WHERE room_id = ? AND start_date <= ? AND end_date >= ?";
+        boolean result = true;
         try {
             PreparedStatement ps = DBConnector.getConnect().prepareStatement(query);
-            ps.setDate(1, start_date);
-            ps.setDate(2, end_date);
-            ps.setString(3, name);
-            ps.setString(4, phone);
-            ps.setString(5, email);
-            ps.setString(6, note);
-            ps.setInt(7, room.getId());
-            result = ps.executeUpdate() != -1;
+            ps.setInt(1, room.getId());
+            ps.setDate(2, enterDate);
+            ps.setDate(3, enterDate);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt(1) >= room.getStock()) {
+                    result = false;
+                    System.out.println(rs.getInt(1) + " oda rezerve");
+                }
+            }
             ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    public static ArrayList<Booking> getList() {
+        String query = "SELECT * FROM booking";
+        Booking obj;
+        ArrayList<Booking> bookings = new ArrayList<>();
+        try {
+            Connection conn = DBConnector.getConnect();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new Booking(rs.getInt("id"), rs.getDate("start_date"), rs.getDate("end_date"), rs.getString("name"), rs.getString("phone"), rs.getString("email"), rs.getString("note"), rs.getInt("room_id"));
+                bookings.add(obj);
+            }
+            conn.close();
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return bookings;
     }
 
     public int getId() {
@@ -59,16 +107,8 @@ public class Booking {
         return start_date;
     }
 
-    public void setStart_date(java.sql.Date start_date) {
-        this.start_date = start_date;
-    }
-
     public Date getEnd_date() {
         return end_date;
-    }
-
-    public void setEnd_date(java.sql.Date end_date) {
-        this.end_date = end_date;
     }
 
     public String getName() {
@@ -83,31 +123,16 @@ public class Booking {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public int getRoom_id() {
         return room_id;
     }
 
-    public void setRoom_id(int room_id) {
-        this.room_id = room_id;
-    }
 }
