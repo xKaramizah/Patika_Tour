@@ -43,15 +43,20 @@ public class ResultGUI extends JFrame {
         setupResultTable(roomList, adult, child, enterDateSql, exitDateSql);
 
         setVisible(true);
-        setupListeners(user);
+        setupListeners(user, adult, child, enterDateSql, exitDateSql);
     }
 
-    private void setupListeners(User user) {
+    private void setupListeners(User user, int adultNo, int childNo, java.sql.Date enterDateSql, java.sql.Date exitDateSql) {
         tbl_result_list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    new BookingGUI(user);
+                    String selectedHotelName = tbl_result_list.getValueAt(tbl_result_list.getSelectedRow(), 1).toString();
+                    String selectedType = tbl_result_list.getValueAt(tbl_result_list.getSelectedRow(), 2).toString();
+                    double price = Double.parseDouble(tbl_result_list.getValueAt(tbl_result_list.getSelectedRow(), 3).toString());
+                    Hotel hotel = Hotel.getFetch("SELECT * FROM hotel WHERE name = '" + selectedHotelName + "'");
+                    Room room = Room.getFetch(hotel.getId(), selectedType);
+                    SwingUtilities.invokeLater(() -> new BookingGUI(user, hotel, room, adultNo, childNo, enterDateSql, exitDateSql, price));
                 }
             }
         });
